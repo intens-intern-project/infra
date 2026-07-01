@@ -1,0 +1,17 @@
+replicaCount: 1
+
+chart:
+  name: backend
+  namespace: default
+
+image:
+  repo: ghcr.io/intens-intern-project/backend/backend
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: github-packages-secret
+
+service:
+  type: ClusterIP
+  port: 8080

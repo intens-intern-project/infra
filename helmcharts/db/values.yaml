@@ -1,0 +1,19 @@
+replicaCount: 1
+
+chart:
+  name: db
+  namespace: default
+
+image:
+  repo: postgres
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5432
+
+auth:
+  username: admin
+  password: admin
+  database: admin

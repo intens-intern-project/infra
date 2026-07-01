@@ -1,0 +1,17 @@
+replicaCount: 1
+
+chart:
+  name: frontend
+  namespace: default
+
+image:
+  repo: ghcr.io/intens-intern-project/frontend/frontend
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: github-packages-secret
+
+service:
+  type: ClusterIP
+  port: 80

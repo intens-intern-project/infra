@@ -3,7 +3,7 @@ Running the project:
 **1) Docker Compose:**
 
 The `backend` and `frontend` projects are deployed locally,
-and musr be stored in sibling directories to this one:
+and must be stored in sibling directories to this one:
 
 ```
 /
@@ -26,4 +26,24 @@ Visit [http://localhost](http://localhost).
 
 **2) Minikube:**
 
-TODO
+Deploy using helm charts:
+
+```sh
+minikube start
+./helmcharts/upgrade.sh
+```
+
+Open ports for backend and frontend services:
+
+```sh
+kubectl port-forward service/backend 8080:8080 
+kubectl port-forward service/frontend 5173:80
+```
+
+Visit [http://localhost:5173](http://localhost:5173).
+
+---
+
+Note: the database initialization scripts are in `/helmcharts/db/files` 
+because Helm doesn't support reading from files outside the chart's root
+directory.
