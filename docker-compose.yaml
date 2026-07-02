@@ -13,7 +13,7 @@ services:
       - "80:80"
     
   db:
-    image: postgres
+    image: postgres:17-alpine
     restart: always
     environment:
       POSTGRES_USER: admin
@@ -24,6 +24,7 @@ services:
     shm_size: 128mb
     volumes:
       - ./helmcharts/db/files/initdb/:/docker-entrypoint-initdb.d/
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 3s
@@ -37,3 +38,6 @@ services:
       ADMINER_DESIGN: win98
     ports:
       - "8003:8080"
+
+volumes:
+  postgres_data:
