@@ -26,10 +26,20 @@ Visit [http://localhost](http://localhost).
 
 **2) Minikube:**
 
-Deploy using helm charts:
+Initialize Minikube:
 
 ```sh
 minikube start
+```
+
+Deploy:
+
+```sh
+# Using Terraform (recommended)
+terraform init
+terraform apply
+
+# or using a script
 ./helmcharts/upgrade.sh
 ```
 
