@@ -46,8 +46,8 @@ terraform apply
 Open ports for backend and frontend services:
 
 ```sh
-kubectl port-forward service/backend 8080:8080 
-kubectl port-forward service/frontend 5173:80
+kubectl port-forward service/backend 8080:8080 -n iip
+kubectl port-forward service/frontend 5173:80 -n iip
 ```
 
 Visit [http://localhost:5173](http://localhost:5173).

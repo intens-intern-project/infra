@@ -2,7 +2,7 @@ replicaCount: 1
 
 chart:
   name: frontend
-  namespace: default
+  namespace: iip
 
 image:
   repo: ghcr.io/intens-intern-project/frontend/frontend

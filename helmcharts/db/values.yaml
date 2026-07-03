@@ -2,7 +2,7 @@ replicaCount: 1
 
 chart:
   name: db
-  namespace: default
+  namespace: iip
 
 image:
   repo: postgres

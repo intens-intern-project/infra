@@ -2,7 +2,7 @@ replicaCount: 1
 
 chart:
   name: backend
-  namespace: default
+  namespace: iip
 
 image:
   repo: ghcr.io/intens-intern-project/backend/backend
