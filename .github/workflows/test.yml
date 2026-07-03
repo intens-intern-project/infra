@@ -1,0 +1,9 @@
+name: Actions Runner Controller Demo
+on:
+  workflow_dispatch:
+
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: iic-runner-set
+    steps:
+    - run: echo "Hello runner scale set runners"
