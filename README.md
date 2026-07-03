@@ -36,6 +36,7 @@ Deploy:
 
 ```sh
 # Using Terraform (recommended)
+cd terraform
 terraform init
 terraform apply
 
