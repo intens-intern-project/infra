@@ -15,4 +15,4 @@ jobs:
         version: v1.36.1
 
     - name: Test if kubectl is working
-      run: kubectl get all -A
+      run: kubectl get all -n iip
