@@ -1,9 +1,9 @@
-name: Actions Runner Controller Demo
+name: Test workflow
 on:
   workflow_dispatch:
 
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: iic-runner-set
+  first-and-only-job:
+    runs-on: iip-org-runner
     steps:
-    - run: echo "Hello runner scale set runners"
+    - run: echo "Hello from local runner"
