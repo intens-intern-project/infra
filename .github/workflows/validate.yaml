@@ -32,3 +32,10 @@ jobs:
           cd terraform
           terraform validate
 
+      - name: Helm Init
+        uses: azure/setup-helm@v4
+        with:
+          version: '3.20.0'
+
+      - name: Helm Lint
+        run: ./ci/helm_lint.sh ./helmcharts
