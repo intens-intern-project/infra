@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate:
-    runs-on: iip-runner-set
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v7
