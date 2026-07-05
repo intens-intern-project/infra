@@ -7,7 +7,6 @@ chart:
 image:
   repo: postgres
   tag: 17-alpine
-  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP

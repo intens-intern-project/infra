@@ -5,9 +5,9 @@ chart:
   namespace: iip
 
 image:
-  repo: ghcr.io/intens-intern-project/backend/backend
+  repo: ghcr.io/intens-intern-project/backend
   tag: "latest"
-  pullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 imagePullSecrets:
   - name: github-packages-secret

@@ -7,7 +7,7 @@ chart:
 image:
   repo: ghcr.io/intens-intern-project/frontend/frontend
   tag: "latest"
-  pullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 imagePullSecrets:
   - name: github-packages-secret
