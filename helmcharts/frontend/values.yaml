@@ -5,7 +5,7 @@ chart:
   namespace: iip
 
 image:
-  repo: ghcr.io/intens-intern-project/frontend/frontend
+  repo: ghcr.io/intens-intern-project/frontend
   tag: "latest"
   imagePullPolicy: Always
 
