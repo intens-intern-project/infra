@@ -17,10 +17,18 @@ jobs:
     # - name: Test if kubectl is working
     #   run: kubectl get all -n iip
 
+    - name: Checkout Repo
+      uses: actions/checkout@v7
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v4
       with:
         terraform_version: "1.15.7"
+
+    - name: Terraform Init
+      run: |
+        cd terraform
+        terraform init
 
     - name: Terraform Apply
       run: |
