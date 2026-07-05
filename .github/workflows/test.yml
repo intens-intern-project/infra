@@ -6,13 +6,23 @@ jobs:
   first-and-only-job:
     runs-on: iip-org-runner
     steps:
-    - name: Say hello
-      run: echo "Hello from local runner"
+    # - name: Say hello
+    #   run: echo "Hello from local runner"
 
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v5.1.0
+    # - name: Install kubectl
+    #   uses: azure/setup-kubectl@v5.1.0
+    #   with:
+    #     version: v1.36.1
+
+    # - name: Test if kubectl is working
+    #   run: kubectl get all -n iip
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v4
       with:
-        version: v1.36.1
+        terraform_version: "1.15.7"
 
-    - name: Test if kubectl is working
-      run: kubectl get all -n iip
+    - name: Terraform Apply
+      run: |
+        cd terraform
+        terraform apply -auto-approve
