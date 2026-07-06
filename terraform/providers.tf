@@ -12,7 +12,8 @@ terraform {
 		}
 	}
 
-	cloud {
+	backend "remote" {
+		hostname     = "app.terraform.io"
 		organization = "iip"
 
 		workspaces {
