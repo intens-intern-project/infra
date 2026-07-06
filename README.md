@@ -1,4 +1,29 @@
-Running the project:
+# Infrastructure as Code
+
+**Repo structure**
+
+The services are deployed on Kubernetes using Helm charts
+in `/helmcharts`. Deployment is automated using Terraform
+whose configuration is in `/terraform`.
+
+Changes pushed
+to [`frontend:main`](https://github.com/intens-intern-project/frontend)
+or [`backend:main`](https://github.com/intens-intern-project/backend) 
+trigger a CI/CD pipeline which builds and pushes a new Docker image
+and rollouts a restart of the Deployment in Kubernetes.
+
+For testing purposes, a Minikube cluster is locally deployed. To
+make modifications on this local cluster, the pipelines use a self-hosted
+ARC runner for the necessary steps.
+
+The database initialization scripts are 
+in [`./helmcharts/db/files`](./helmcharts/db/files/)
+because Helm doesn't support reading from files 
+outside the chart's root directory.
+
+---
+
+**Running the project**
 
 **1) Docker Compose:**
 
@@ -52,9 +77,3 @@ kubectl port-forward service/frontend 5173:80 -n iip
 ```
 
 Visit [http://localhost:5173](http://localhost:5173).
-
----
-
-Note: the database initialization scripts are in `/helmcharts/db/files` 
-because Helm doesn't support reading from files outside the chart's root
-directory.

@@ -1,0 +1,36 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: iip-org-runner-role
+  namespace: iip
+rules:
+  # Read access to everything
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  # Full access to deployments and replicasets
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: iip-org-runner-sa
+  namespace: arc-runners
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: iip-org-runner-role-binding
+  namespace: iip
+subjects:
+  - kind: ServiceAccount
+    name: iip-org-runner-sa
+    namespace: arc-runners
+roleRef:
+  kind: Role
+  name: iip-org-runner-role
+  apiGroup: rbac.authorization.k8s.io
+---

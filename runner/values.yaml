@@ -1,0 +1,29 @@
+# Must match the URL of the relevant organization 
+githubConfigUrl: https://github.com/intens-intern-project
+
+# Must match the secret name from Step 3
+githubConfigSecret: github-auth
+
+# Must match the runner group name from Step 4
+runnerGroup: self-hosted-runner-group
+
+# Must match the name of the installed helm chart from Step 6
+runnerScaleSetName: iip-org-runner
+
+template:
+  spec:
+    # Must match the name of the Service Account defined in ./rbac.yaml from Step 5
+    serviceAccountName: iip-org-runner-sa
+    containers:
+      - name: runner
+        image: ghcr.io/actions/actions-runner:latest
+        command: ["/home/runner/run.sh"]
+        volumeMounts:
+          - name: kubeconfig
+            # $HOME inside a runner pod is /home/runner
+            mountPath: /home/runner/.kube/config
+            subPath: config
+    volumes:
+      - name: kubeconfig
+        secret:
+          secretName: kubeconfig
