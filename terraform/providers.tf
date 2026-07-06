@@ -11,6 +11,14 @@ terraform {
 			version = "3.2.0"
 		}
 	}
+
+	cloud {
+		organization = "iip"
+
+		workspaces {
+			name = "iip-workspace"
+		}
+	}
 }
 
 provider "kubernetes" {

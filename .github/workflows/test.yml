@@ -2,6 +2,9 @@ name: Test workflow
 on:
   workflow_dispatch:
 
+env:
+  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+
 jobs:
   first-and-only-job:
     runs-on: iip-org-runner
