@@ -2,9 +2,6 @@ name: Test workflow
 on:
   workflow_dispatch:
 
-env:
-  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-
 jobs:
   first-and-only-job:
     runs-on: iip-org-runner
@@ -32,6 +29,7 @@ jobs:
       uses: hashicorp/setup-terraform@v4
       with:
         terraform_version: "1.15.7"
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     - name: Terraform Init
       run: |
