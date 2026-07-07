@@ -29,7 +29,7 @@ jobs:
 
       - name: Get Helm Chart Versions
         run: |
-          versions=$(./ci/get_charts_versions.sh)
+          versions=$(./ci/get_chart_versions.sh)
           echo $versions
           echo TF_VAR_${{ env.TF_CHARTS_VAR_NAME }}=$versions >> $GITHUB_ENV
 
