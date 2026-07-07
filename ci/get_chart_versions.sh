@@ -3,7 +3,7 @@
 # Extracts versions for all helm charts in a format suitable for
 # Terraform deployment. The format is following:
 #
-# '{"var_1":"1.2.3","var_2":"1.0.0","var_3":"0.1.0",}'
+# "{"var_1":"1.2.3","var_2":"1.0.0","var_3":"0.1.0"}"
 # 
 # Note the trailing comma.
 #
@@ -23,7 +23,7 @@ set -euo pipefail
 
 CHARTS_DIR="${1:-helmcharts}"
 
-values="'{"
+values="{"
 
 for chart in "$CHARTS_DIR"/*; do
   if [ -f "$chart/Chart.yaml" ]; then
@@ -34,6 +34,7 @@ for chart in "$CHARTS_DIR"/*; do
   fi
 done
 
-values+="}'"
 
-echo $values
+values="${values%,}}"
+
+echo \"$values\"
