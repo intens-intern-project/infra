@@ -4,6 +4,11 @@ on:
     branches:
       - main
 
+env:
+  TF_CHARTS_VAR_NAME: helm_chart_versions
+  ORG_OWNER: magley
+  HELM_REMOTE: oci://ghcr.io/intens-intern-project
+
 jobs:
   deploy:
     runs-on: iip-org-runner
@@ -11,10 +16,27 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v7
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - name: Helm Init
+        uses: azure/setup-helm@v4
         with:
-          node-version: '24'
+          version: '3.20.0'
+
+      - name: Login to Helm
+        run: helm registry login ghcr.io -u ${{ env.ORG_OWNER }} -p ${{ secrets.HELM_TOKEN }}
+
+      - name: Build and Push Helm Charts
+        run: './ci/helm_publish.sh ./helmcharts ${{ env.HELM_REMOTE }}'
+
+      - name: Get Helm Chart Versions
+        run: |
+          versions=$(./ci/get_charts_versions.sh)
+          echo $versions
+          echo TF_VAR_${{ env.TF_CHARTS_VAR_NAME }}=$versions >> $GITHUB_ENV
+
+      # - name: Setup Node
+      #   uses: actions/setup-node@v6
+      #   with:
+      #     node-version: '24'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
