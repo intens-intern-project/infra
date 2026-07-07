@@ -1,18 +1,30 @@
 variable "helm_charts" {
-    description = "Local helm charts to deploy"
+    description = "Helm charts to deploy"
+    type = map(object({
+        name =  optional(string)
+        chart = string
+    }))
+
     default = {
         backend = {
-            // name = "backend"
             chart   = "oci://ghcr.io/intens-intern-project/backend"
-            version = "0.1.4"
         },
         frontend = {
             chart   = "oci://ghcr.io/intens-intern-project/frontend"
-            version = "0.1.4"
         },
         db = {
             chart   = "oci://ghcr.io/intens-intern-project/db"
-            version = "0.1.3"
         }
+    }
+}
+
+variable "helm_chart_versions" {
+    description = "Shallow map storing versions of each Helm chart. Overwritten by CI/CD."
+    type = map(string)
+
+    default = {
+        backend = "0.1.4"
+        frontend = "0.1.4"
+        db = "0.1.3"
     }
 }
