@@ -37,4 +37,4 @@ done
 
 values="${values%,}}"
 
-echo \"$values\"
+echo $values
