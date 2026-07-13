@@ -9,6 +9,10 @@ resource "helm_release" "charts" {
         {
             name  = "environment"
             value = var.environment
-        }
+        },
+        {
+            name  = "chart.namespace"
+            value = var.k8s_namespace
+        },
     ]
 }

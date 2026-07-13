@@ -31,7 +31,6 @@ jobs:
               exit 0
               ;;
           esac
-          echo Will use $TFVARS_FILE for deployment
 
       - name: Helm Init
         uses: azure/setup-helm@v4
