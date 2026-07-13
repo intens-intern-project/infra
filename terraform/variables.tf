@@ -28,3 +28,8 @@ variable "helm_chart_versions" {
         db = "0.1.3"
     }
 }
+
+variable "environment" {
+    description = "Staging environment passed to the helm charts as a `environment` value"
+    type = string
+}

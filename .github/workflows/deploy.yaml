@@ -52,4 +52,4 @@ jobs:
       - name: Terraform Apply
         run: |
           cd terraform
-          terraform apply -auto-approve
+          terraform apply -auto-approve -var-file=prod.tfvars

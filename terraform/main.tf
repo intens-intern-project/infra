@@ -4,4 +4,11 @@ resource "helm_release" "charts" {
     name     = coalesce(each.value.name, each.key)
     chart    = each.value.chart
     version  = var.helm_chart_versions[each.key]
+
+    set = [
+        {
+            name  = "environment"
+            value = var.environment
+        }
+    ]
 }
