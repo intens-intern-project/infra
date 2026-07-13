@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 env:
   TF_CHARTS_VAR_NAME: helm_chart_versions
@@ -16,13 +17,32 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v7
 
+      - name: Determine Staging Environment
+        run: |
+          case "$GITHUB_REF_NAME" in
+            main)
+              echo "TFVARS_FILE=prod.tfvars" >> "$GITHUB_ENV"
+              ;;
+            dev)
+              echo "TFVARS_FILE=dev.tfvars" >> "$GITHUB_ENV"
+              ;;
+            *)
+              echo "Unsupported branch: $GITHUB_REF_NAME"
+              exit 0
+              ;;
+          esac
+          echo Will use $TFVARS_FILE for deployment
+
       - name: Helm Init
         uses: azure/setup-helm@v4
         with:
           version: '3.20.0'
 
       - name: Login to Helm
-        run: helm registry login ghcr.io -u ${{ env.ORG_OWNER }} -p ${{ secrets.HELM_TOKEN }}
+        run: |
+          helm registry login ghcr.io \
+            -u "${{ env.ORG_OWNER }}" \
+            --password-stdin <<< "${{ secrets.HELM_TOKEN }}"
 
       - name: Build and Push Helm Charts
         run: './ci/helm_publish.sh ./helmcharts ${{ env.HELM_REMOTE }}'
@@ -52,4 +72,4 @@ jobs:
       - name: Terraform Apply
         run: |
           cd terraform
-          terraform apply -auto-approve -var-file=prod.tfvars
+          terraform apply -auto-approve -var-file=$TFVARS_FILE
