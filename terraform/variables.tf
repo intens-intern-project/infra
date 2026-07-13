@@ -33,3 +33,8 @@ variable "environment" {
     description = "Staging environment passed to the helm charts as a `environment` value"
     type = string
 }
+
+variable "k8s_namespace" {
+    description = "Which Kubernetes namespace to deploy the helm charts onto"
+    type = string
+}

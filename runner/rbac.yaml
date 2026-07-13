@@ -1,9 +1,7 @@
----
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: iip-org-runner-role
-  namespace: iip
+  name: iip-org-runner-cluster-role
 rules:
   # Read access to everything
   - apiGroups: ["*"]
@@ -20,17 +18,32 @@ metadata:
   name: iip-org-runner-sa
   namespace: arc-runners
 ---
+# [dev] environment
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: iip-org-runner-role-binding
-  namespace: iip
+  name: iip-org-runner-role-binding-dev
+  namespace: iip-dev
 subjects:
   - kind: ServiceAccount
     name: iip-org-runner-sa
     namespace: arc-runners
 roleRef:
-  kind: Role
-  name: iip-org-runner-role
+  kind: ClusterRole
+  name: iip-org-runner-cluster-role
   apiGroup: rbac.authorization.k8s.io
 ---
+# [prod] environment
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: iip-org-runner-role-binding-prod
+  namespace: iip-prod
+subjects:
+  - kind: ServiceAccount
+    name: iip-org-runner-sa
+    namespace: arc-runners
+roleRef:
+  kind: ClusterRole
+  name: iip-org-runner-cluster-role
+  apiGroup: rbac.authorization.k8s.io
