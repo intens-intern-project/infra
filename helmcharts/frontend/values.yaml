@@ -15,3 +15,5 @@ imagePullSecrets:
 service:
   type: ClusterIP
   port: 80
+
+environment: dev
