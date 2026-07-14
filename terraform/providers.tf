@@ -17,7 +17,7 @@ terraform {
 		organization = "iip"
 
 		workspaces {
-			name = "iip-workspace"
+			prefix = "iip-"
 		}
 	}
 }

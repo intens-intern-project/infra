@@ -21,9 +21,11 @@ jobs:
         run: |
           case "$GITHUB_REF_NAME" in
             main)
+              echo "TF_WORKSPACE=prod" >> "$GITHUB_ENV"
               echo "TFVARS_FILE=prod.tfvars" >> "$GITHUB_ENV"
               ;;
             dev)
+              echo "TF_WORKSPACE=dev" >> "$GITHUB_ENV"
               echo "TFVARS_FILE=dev.tfvars" >> "$GITHUB_ENV"
               ;;
             *)
