@@ -15,10 +15,6 @@ terraform {
 	backend "remote" {
 		hostname     = "app.terraform.io"
 		organization = "iip"
-
-		workspaces {
-			name = "dev"
-		}
 	}
 }
 
