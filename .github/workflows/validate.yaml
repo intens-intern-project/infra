@@ -14,7 +14,7 @@ jobs:
 
       - name: Determine Staging Environment
         run: |
-          case "$GITHUB_REF_NAME" in
+          case "$GITHUB_BASE_REF" in
             main)
               echo "TF_WORKSPACE=prod" >> "$GITHUB_ENV"
               echo "TFVARS_FILE=prod.tfvars" >> "$GITHUB_ENV"
@@ -24,11 +24,11 @@ jobs:
               echo "TFVARS_FILE=dev.tfvars" >> "$GITHUB_ENV"
               ;;
             *)
-              echo "Unsupported branch: $GITHUB_REF_NAME"
+              echo "Unsupported branch: $GITHUB_BASE_REF"
               exit 0
               ;;
           esac
-          
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
