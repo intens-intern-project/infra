@@ -33,6 +33,22 @@ jobs:
           cd terraform
           terraform validate
 
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan -out=tfplan -var-file=$TFVARS_FILE
+
+      - name: Generate Readable Plan
+        run: |
+          cd terraform
+          terraform show -no-color tfplan > plan.txt
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Terraform plan
+          path: terraform/plan.txt
+
       - name: Helm Init
         uses: azure/setup-helm@v4
         with:
