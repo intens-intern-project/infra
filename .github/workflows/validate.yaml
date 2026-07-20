@@ -7,20 +7,43 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: iip-org-runner
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v7
+
+      - name: Determine Staging Environment
+        run: |
+          case "$GITHUB_BASE_REF" in
+            main)
+              echo "TF_WORKSPACE=prod" >> "$GITHUB_ENV"
+              echo "TFVARS_FILE=prod.tfvars" >> "$GITHUB_ENV"
+              ;;
+            dev)
+              echo "TF_WORKSPACE=dev" >> "$GITHUB_ENV"
+              echo "TFVARS_FILE=dev.tfvars" >> "$GITHUB_ENV"
+              ;;
+            *)
+              echo "Unsupported branch: $GITHUB_BASE_REF"
+              exit 0
+              ;;
+          esac
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: "1.15.7"
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform Init
         run: |
           cd terraform
-          terraform init -backend=false
+          terraform init
 
       - name: Terraform Format Check
         run: |
@@ -32,6 +55,22 @@ jobs:
         run: |
           cd terraform
           terraform validate
+
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan -out=tfplan -var-file=$TFVARS_FILE
+
+      - name: Generate Readable Plan
+        run: |
+          cd terraform
+          terraform show -no-color tfplan > plan.txt
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Terraform plan
+          path: terraform/plan.txt
 
       - name: Helm Init
         uses: azure/setup-helm@v4
